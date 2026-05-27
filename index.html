@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unipoint – Noleggio Ponteggi & Ristrutturazioni | Bagnolo Cremasco</title>
+  <meta name="description" content="Noleggio ponteggi, ristrutturazioni, rifacimento tetti e cappotti termici. Oltre 20 anni di esperienza in provincia di Cremona. Preventivo gratuito."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --steel:    #1a1f2e;
+      --iron:     #2c3347;
+      --concrete: #6b7280;
+      --dust:     #e8e4dc;
+      --bone:     #f4f1eb;
+      --gold:     #c89940;
+      --amber:    #e8a820;
+      --white:    #fafaf8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--steel); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(26,31,46,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,153,64,0.2);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.2rem, 5vw, 4rem);
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: 0.08em; color: var(--white);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(250,250,248,0.7); text-decoration: none;
+      font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--steel) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--amber) !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px;
+      transition: .3s;
+    }
+    .mob-menu {
+      display: none; position: fixed;
+      top: 64px; left: 0; right: 0; z-index: 99;
+      background: rgba(22,27,42,0.99);
+      flex-direction: column;
+      border-bottom: 1px solid rgba(200,153,64,0.2);
+    }
+    .mob-menu.open { display: flex; }
+    .mob-menu a {
+      color: rgba(250,250,248,0.85); text-decoration: none;
+      font-size: 1rem; font-weight: 500;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background .2s;
+    }
+    .mob-menu a:hover { background: rgba(200,153,64,0.08); }
+    .mob-menu a.mob-cta { color: var(--gold); font-weight: 700; border-bottom: none; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100svh;
+      background: var(--steel);
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(1.8rem, 4vw, 4.2rem);
+      align-items: center;
+      padding: clamp(5.5rem,12vw,9rem) clamp(1.2rem, 8vw, 7rem) clamp(2rem,4vw,4rem);
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,153,64,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,153,64,0.07) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+    }
+    .hero-accent {
+      position: absolute; right: -10vw; top: -5vh;
+      width: 60vw; height: 110vh;
+      background: linear-gradient(135deg, rgba(200,153,64,0.1), rgba(44,51,71,0.3));
+      clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .hero-line {
+      position: absolute; left: 0; bottom: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .hero-content {
+      position: relative;
+      max-width: 860px; width: 100%;
+    }
+    .hero-media {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      background: rgba(44,51,71,0.7);
+      border: 1px solid rgba(200,153,64,0.18);
+      box-shadow: 0 26px 80px rgba(0,0,0,0.35);
+      aspect-ratio: 4 / 5;
+    }
+    .hero-media::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(26,31,46,0.05) 20%, rgba(26,31,46,0.68) 100%);
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      filter: saturate(0.9) contrast(1.05) brightness(0.9);
+      transform: scale(1.02);
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 2px; background: var(--gold);
+    }
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.2rem, 8vw, 7.5rem);
+      line-height: 0.93; color: var(--white);
+      letter-spacing: 0.03em; margin-bottom: 1.4rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.85em;
+    }
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      color: rgba(232,228,220,0.78); line-height: 1.65;
+      max-width: 520px; margin-bottom: 2.4rem; font-weight: 300;
+    }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--gold); color: var(--steel);
+      font-weight: 700; font-size: 0.88rem;
+      padding: 0.85rem 1.8rem; border-radius: 2px;
+      text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
+      transition: background .2s, transform .2s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--amber); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 1.5px solid rgba(232,228,220,0.3);
+      color: var(--dust); font-weight: 500; font-size: 0.88rem;
+      padding: 0.85rem 1.8rem; border-radius: 2px;
+      text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem; line-height: 1; color: var(--gold);
+    }
+    .stat-label {
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(232,228,220,0.5); margin-top: 0.15rem;
+    }
+
+    /* ── STRIP ── */
+    .strip {
+      background: var(--gold);
+      padding: 0.9rem clamp(1.2rem, 5vw, 4rem);
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      align-items: center; justify-content: center;
+    }
+    .strip-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--steel);
+    }
+    .strip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--steel); }
+
+    /* ── GENERAL SECTION ── */
+    section { padding: clamp(3.5rem, 8vw, 6.5rem) clamp(1.2rem, 8vw, 7rem); }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.8rem;
+    }
+    .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--gold); }
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      line-height: 1.05; letter-spacing: 0.03em;
+      color: var(--steel); margin-bottom: 0.8rem;
+    }
+    h2 .accent { color: var(--gold); }
+    .lead {
+      font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+      color: var(--concrete); line-height: 1.7;
+      max-width: 580px; font-weight: 300;
+    }
+
+    /* ── SERVIZI ── */
+    #servizi { background: var(--bone); }
+    .servizi-intro { max-width: 640px; margin-bottom: 3rem; }
+    .servizi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .service-card {
+      background: var(--white); border-radius: 3px;
+      overflow: hidden; position: relative;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 18px 48px rgba(0,0,0,0.12); }
+    .svc-photo-wrap { overflow: hidden; position: relative; }
+    .svc-photo-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(26,31,46,0.15) 100%);
+    }
+    .svc-photo {
+      width: 100%; aspect-ratio: 16/10;
+      object-fit: cover; display: block;
+      filter: saturate(0.88) contrast(1.05);
+      transition: transform .45s;
+    }
+    .service-card:hover .svc-photo { transform: scale(1.05); }
+    .svc-body { padding: 1.6rem 1.6rem 1.8rem; position: relative; }
+    .svc-body::before {
+      content: ''; position: absolute; left: 1.6rem; top: 0;
+      width: 36px; height: 3px; background: var(--gold);
+    }
+    .svc-body h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.45rem; letter-spacing: 0.07em;
+      color: var(--steel); margin-bottom: 0.5rem; padding-top: 0.7rem;
+    }
+    .svc-body p { font-size: 0.87rem; color: var(--concrete); line-height: 1.65; font-weight: 300; margin-bottom: 1rem; }
+    .svc-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.76rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none; transition: gap .2s;
+    }
+    .svc-link:hover { gap: 0.7rem; }
+
+    /* ── CHI SIAMO ── */
+    #chi-siamo {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center;
+    }
+    .about-visual {
+      position: relative; aspect-ratio: 4/5;
+      background: var(--steel); border-radius: 2px; overflow: hidden;
+    }
+    .about-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,11,20,0.65), rgba(8,11,20,0.05));
+      z-index: 1;
+      pointer-events: none;
+    }
+    .about-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: saturate(0.85) contrast(1.06) brightness(0.84);
+    }
+    .about-visual-inner {
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, rgba(200,153,64,0.04) 0px, rgba(200,153,64,0.04) 2px,
+        transparent 2px, transparent 14px
+      );
+      z-index: 2;
+    }
+    .about-badge {
+      position: absolute; bottom: 2rem; right: -1.2rem;
+      background: var(--gold); padding: 1.2rem 1.5rem; border-radius: 2px;
+      z-index: 3;
+    }
+    .about-badge-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem; line-height: 1; color: var(--steel);
+    }
+    .about-badge-txt {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--steel);
+    }
+    .about-bars {
+      position: absolute; left: 2rem; top: 50%;
+      transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px;
+      z-index: 3;
+    }
+    .abar { height: 5px; border-radius: 1px; background: rgba(200,153,64,0.5); }
+    .about-text .lead { margin-bottom: 1.8rem; }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2rem; }
+    .check-list li { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.9rem; color: var(--steel); }
+    .check-list li::before {
+      content: '✓'; width: 20px; height: 20px; flex-shrink: 0;
+      background: var(--gold); color: var(--steel); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.66rem; font-weight: 700; margin-top: 0.05rem;
+    }
+
+    /* ── CANTIERI ── */
+    #cantieri { background: var(--steel); }
+    #cantieri h2, #cantieri .section-label { color: var(--white); }
+    #cantieri .lead { color: rgba(232,228,220,0.65); }
+
+    /* MOBILE FIRST */
+    .works-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 2.5rem;
+    }
+    .work-card {
+      position: relative; overflow: hidden; border-radius: 3px;
+      aspect-ratio: 16/9; background: var(--iron); cursor: pointer;
+    }
+    .work-card img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      filter: saturate(0.82) brightness(0.78);
+      transition: transform .5s ease, filter .4s ease;
+    }
+    .work-card:hover img { transform: scale(1.06); filter: saturate(0.96) brightness(0.62); }
+    .work-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      background: linear-gradient(to top, rgba(8,11,20,0.85) 0%, rgba(8,11,20,0.15) 45%, transparent 68%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 1.2rem 1.4rem;
+    }
+    .work-label {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.2rem;
+    }
+    .work-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem; letter-spacing: 0.06em;
+      color: var(--white); line-height: 1.1;
+    }
+
+    /* TABLET: 2 col, featured 2/2 */
+    @media (min-width: 580px) {
+      .works-grid { grid-template-columns: 1fr 1fr; }
+      .work-featured { grid-column: 1 / -1; aspect-ratio: 21/8; }
+    }
+    /* DESKTOP: 3 col */
+    @media (min-width: 960px) {
+      .works-grid { grid-template-columns: repeat(3, 1fr); }
+      .work-featured { grid-column: 1 / 3; aspect-ratio: 16/9; }
+      .work-card { aspect-ratio: 4/3; }
+      .work-featured { aspect-ratio: 16/9; }
+    }
+
+    /* ── PERCHÉ NOI ── */
+    #perche-noi { background: var(--bone); }
+    .perche-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .perche-item { position: relative; }
+    .perche-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem; line-height: 1;
+      color: rgba(200,153,64,0.15);
+      position: absolute; top: -0.8rem; left: -0.4rem;
+    }
+    .perche-content { position: relative; padding-top: 1.4rem; }
+    .perche-content h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem; letter-spacing: 0.06em;
+      color: var(--steel); margin-bottom: 0.45rem;
+    }
+    .perche-content p { font-size: 0.86rem; color: var(--concrete); line-height: 1.65; font-weight: 300; }
+
+    /* ── PREVENTIVO ── */
+    #preventivo { background: var(--steel); position: relative; overflow: hidden; }
+    #preventivo::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(200,153,64,0.1) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .prev-wrap {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 5.5rem); align-items: start;
+    }
+    .prev-text h2 { color: var(--white); }
+    .prev-text .section-label { color: var(--gold); }
+    .prev-text .lead { color: rgba(232,228,220,0.7); }
+    .contact-info { margin-top: 2.2rem; display: flex; flex-direction: column; gap: 0.9rem; }
+    .contact-row { display: flex; align-items: center; gap: 0.9rem; }
+    .contact-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: rgba(200,153,64,0.12);
+      border: 1px solid rgba(200,153,64,0.22); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .contact-row a, .contact-row span {
+      color: var(--dust); text-decoration: none; font-size: 0.96rem; font-weight: 500; transition: color .2s;
+    }
+    .contact-row a:hover { color: var(--gold); }
+    .form-card {
+      background: var(--white); border-radius: 4px; padding: 2.2rem;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.28);
+    }
+    .form-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem; letter-spacing: 0.05em; color: var(--steel); margin-bottom: 0.2rem;
+    }
+    .form-card > p { font-size: 0.83rem; color: var(--concrete); margin-bottom: 1.6rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label {
+      display: block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--steel); margin-bottom: 0.38rem;
+    }
+    input, textarea, select {
+      width: 100%; background: var(--bone);
+      border: 1.5px solid transparent; border-radius: 2px;
+      padding: 0.68rem 0.85rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--steel);
+      outline: none; transition: border-color .2s, background .2s;
+      -webkit-appearance: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); background: var(--white); }
+    textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      width: 100%; background: var(--gold); color: var(--steel);
+      border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.95rem; border-radius: 2px; margin-top: 0.4rem;
+      transition: background .2s, transform .2s;
+    }
+    .form-submit:hover { background: var(--amber); transform: translateY(-2px); }
+    .form-note { text-align: center; font-size: 0.72rem; color: var(--concrete); margin-top: 0.7rem; }
+
+    /* ── FOOTER ── */
+    footer { background: #0f1320; padding: 2.8rem clamp(1.2rem, 8vw, 7rem) 1.4rem; }
+    .footer-top {
+      display: flex; justify-content: space-between; flex-wrap: wrap;
+      gap: 2rem; padding-bottom: 2.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand .nav-logo { display: block; margin-bottom: 0.6rem; font-size: 1.7rem; }
+    .footer-brand p { font-size: 0.81rem; color: rgba(232,228,220,0.42); line-height: 1.6; max-width: 240px; }
+    .footer-col h4 {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-col ul li a { font-size: 0.83rem; color: rgba(232,228,220,0.5); text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      padding-top: 1.4rem; display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.8rem;
+      font-size: 0.73rem; color: rgba(232,228,220,0.28);
+    }
+    .footer-bottom a { color: rgba(200,153,64,0.5); text-decoration: none; }
+
+    /* ── WA FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+      display: flex; align-items: center; gap: 0.6rem;
+      background: #25d366; color: white;
+      font-weight: 700; font-size: 0.82rem;
+      padding: 0.7rem 1.2rem; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 5px 22px rgba(37,211,102,0.4);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(37,211,102,0.5); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up:nth-child(2) { transition-delay: .1s; }
+    .fade-up:nth-child(3) { transition-delay: .2s; }
+
+    /* ── RESPONSIVE MOBILE FIRST ── */
+    @media (max-width: 479px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-media { aspect-ratio: 16 / 10; }
+      h1 { font-size: 2.9rem; }
+      .hero-buttons { flex-direction: column; }
+      .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+      .hero-stats { gap: 1.2rem; }
+      .servizi-grid { grid-template-columns: 1fr; }
+      #chi-siamo { grid-template-columns: 1fr; }
+      .about-visual { aspect-ratio: 4/3; }
+      .about-badge { right: 0.5rem; }
+      .perche-grid { grid-template-columns: 1fr; }
+      .prev-wrap { grid-template-columns: 1fr; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      .footer-top { flex-direction: column; }
+    }
+    @media (min-width: 480px) and (max-width: 767px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-media { aspect-ratio: 16 / 10; max-width: 680px; }
+      .servizi-grid { grid-template-columns: 1fr; }
+      #chi-siamo { grid-template-columns: 1fr; }
+      .about-visual { aspect-ratio: 16/9; }
+      .about-badge { right: 0.5rem; }
+      .prev-wrap { grid-template-columns: 1fr; }
+      .form-row-2 { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-media { aspect-ratio: 16 / 9; max-width: 820px; }
+      .servizi-grid { grid-template-columns: 1fr 1fr; }
+      #chi-siamo { grid-template-columns: 1fr; }
+      .about-visual { aspect-ratio: 16/9; max-width: 520px; }
+      .prev-wrap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Uni<span>point</span></div>
+  <ul class="nav-links">
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#chi-siamo">Chi siamo</a></li>
+    <li><a href="#cantieri">Lavori</a></li>
+    <li><a href="#preventivo" class="nav-cta">Preventivo Gratuito</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="#servizi" onclick="closeMob()">Servizi</a>
+  <a href="#chi-siamo" onclick="closeMob()">Chi Siamo</a>
+  <a href="#cantieri" onclick="closeMob()">Lavori</a>
+  <a href="#perche-noi" onclick="closeMob()">Perché Noi</a>
+  <a href="#preventivo" class="mob-cta" onclick="closeMob()">📋 Preventivo Gratuito</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-line"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Bagnolo Cremasco · Provincia di Cremona</div>
+      <h1>Ponteggi<br/><em>Sicuri</em><br/>Risultati<br/>Certi</h1>
+      <p class="hero-sub">Noleggio ponteggi in opera, ristrutturazioni chiavi in mano, rifacimento tetti e cappotti termici. Oltre 20 anni al servizio di imprese, condomini e privati in tutta la provincia di Cremona.</p>
+      <div class="hero-buttons">
+        <a href="#preventivo" class="btn-primary"><span>Preventivo Gratuito</span><span>→</span></a>
+        <a href="tel:3451183711" class="btn-outline"><span>📞</span><span>345 118 3711</span></a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Anni di<br/>Esperienza</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Cantieri<br/>Completati</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Preventivi<br/>Gratuiti</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-media" aria-hidden="true">
+      <img src="https://source.unsplash.com/3pB7PkCJkRg/1200x1500" alt="" loading="eager" decoding="async"/>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><div class="strip-dot"></div>Geometra</div>
+  <div class="strip-item"><div class="strip-dot"></div>Lavori Edili</div>
+  <div class="strip-item"><div class="strip-dot"></div>Noleggio Ponteggi</div>
+  <div class="strip-item"><div class="strip-dot"></div>Preventivo Gratuito</div>
+  <div class="strip-item"><div class="strip-dot"></div>Cremona &amp; Provincia</div>
+</div>
+
+<!-- SERVIZI -->
+<section id="servizi">
+  <div class="servizi-intro">
+    <div class="section-label">I Nostri Servizi</div>
+    <h2>Tutto ciò che serve<br/>per il tuo <span class="accent">cantiere</span></h2>
+    <p class="lead">Da oltre vent'anni offriamo soluzioni complete per l'edilizia, con attrezzature certificate e personale specializzato.</p>
+  </div>
+  <div class="servizi-grid">
+    <div class="service-card fade-up">
+      <div class="svc-photo-wrap">
+        <img class="svc-photo" src="https://source.unsplash.com/Dwu85P9SOIk/1200x750" alt="Geometra al lavoro" loading="lazy" decoding="async"/>
+      </div>
+      <div class="svc-body">
+        <h3>Geometra</h3>
+        <p>Assistenza tecnica professionale: sopralluoghi, rilievi, pratiche burocratiche, direzione lavori e consulenza per ogni intervento edilizio.</p>
+        <a href="#preventivo" class="svc-link">Richiedi consulenza →</a>
+      </div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="svc-photo-wrap">
+        <img class="svc-photo" src="https://source.unsplash.com/kJV2ie9NWGk/1200x750" alt="Lavori edili in cantiere" loading="lazy" decoding="async"/>
+      </div>
+      <div class="svc-body">
+        <h3>Lavori Edili</h3>
+        <p>Ristrutturazioni chiavi in mano, rifacimento tetti, cappotti termici e nuove costruzioni con eccellente rapporto qualità-prezzo.</p>
+        <a href="#preventivo" class="svc-link">Richiedi preventivo →</a>
+      </div>
+    </div>
+    <div class="service-card fade-up">
+      <div class="svc-photo-wrap">
+        <img class="svc-photo" src="https://source.unsplash.com/ZYQ-7rRP0Es/1200x750" alt="Ponteggi edili per noleggio" loading="lazy" decoding="async"/>
+      </div>
+      <div class="svc-body">
+        <h3>Noleggio Ponteggi</h3>
+        <p>Ponteggi in opera per imprese, condomini e privati. Montaggio e smontaggio inclusi, con progetto tecnico e documentazione di sicurezza.</p>
+        <a href="#preventivo" class="svc-link">Richiedi sopralluogo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHI SIAMO -->
+<section id="chi-siamo">
+  <div class="about-visual">
+    <img class="about-photo" src="https://source.unsplash.com/4TYhUxBWX7s/1200x1500" alt="Scaffolding su facciata in ristrutturazione" loading="lazy" decoding="async"/>
+    <div class="about-visual-inner"></div>
+    <div class="about-bars">
+      <div class="abar" style="width:80px"></div>
+      <div class="abar" style="width:120px;opacity:.7"></div>
+      <div class="abar" style="width:55px;opacity:.4"></div>
+      <div class="abar" style="width:100px;opacity:.6"></div>
+    </div>
+    <div class="about-badge">
+      <div class="about-badge-num">20+</div>
+      <div class="about-badge-txt">Anni di<br/>Esperienza</div>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="section-label">Chi Siamo</div>
+    <h2>Unipoint:<br/>il tuo <span class="accent">partner</span><br/>di fiducia</h2>
+    <p class="lead">La ditta Unipoint, guidata dal Geometra Fiorenza Mauro, è un punto di riferimento consolidato per l'edilizia in tutta la provincia di Cremona.</p>
+    <ul class="check-list">
+      <li>Oltre 20 anni di esperienza nel settore edile</li>
+      <li>Personale specializzato e qualificato</li>
+      <li>Attrezzature certificate e conformi alle normative</li>
+      <li>Sopralluogo gratuito e preventivo personalizzato</li>
+      <li>Servizio attivo su tutta la provincia di Cremona</li>
+      <li>Disponibile su WhatsApp per risposte rapide</li>
+    </ul>
+    <a href="#preventivo" class="btn-primary" style="background:var(--steel);color:var(--white)">Richiedi un Sopralluogo →</a>
+  </div>
+</section>
+
+<!-- CANTIERI -->
+<section id="cantieri">
+  <div class="section-label">I Nostri Lavori</div>
+  <h2>Cantieri &amp; <span style="color:var(--gold)">Realizzazioni</span></h2>
+  <p class="lead">Interventi completati con professionalità e cura del dettaglio in tutta la provincia di Cremona.</p>
+
+  <div class="works-grid">
+
+    <!-- 1 – GRANDE: ponteggio su facciata edificio multipiano -->
+    <div class="work-card work-featured">
+      <img
+        src="https://source.unsplash.com/3pB7PkCJkRg/1800x800"
+        alt="Ponteggio su facciata edificio multipiano Cremona"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="work-overlay">
+        <div class="work-label">Noleggio Ponteggi</div>
+        <div class="work-title">Ponteggio Facciata Complessa · Cremona</div>
+      </div>
+    </div>
+
+    <!-- 2 – tetto: operai su copertura in tegole -->
+    <div class="work-card">
+      <img
+        src="https://source.unsplash.com/-1l0iZaM8ms/1200x675"
+        alt="Rifacimento copertura tetto tegole"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="work-overlay">
+        <div class="work-label">Lavori Edili</div>
+        <div class="work-title">Rifacimento Copertura · CR</div>
+      </div>
+    </div>
+
+    <!-- 3 – ponteggio condominio/palazzo -->
+    <div class="work-card">
+      <img
+        src="https://source.unsplash.com/ZYQ-7rRP0Es/1200x675"
+        alt="Ponteggio condominio ristrutturazione facciata"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="work-overlay">
+        <div class="work-label">Noleggio Ponteggi</div>
+        <div class="work-title">Ponteggio Condominio · Crema</div>
+      </div>
+    </div>
+
+    <!-- 4 – operai edili ristrutturazione esterna -->
+    <div class="work-card">
+      <img
+        src="https://source.unsplash.com/EuYrxc_Amkc/1200x675"
+        alt="Operai lavori edili ristrutturazione esterna Bagnolo"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="work-overlay">
+        <div class="work-label">Lavori Edili</div>
+        <div class="work-title">Ristrutturazione Esterna · Bagnolo CR</div>
+      </div>
+    </div>
+
+    <!-- 5 – struttura industriale grande cantiere -->
+    <div class="work-card">
+      <img
+        src="https://source.unsplash.com/NoRQf2uWVzU/1200x675"
+        alt="Ponteggio industriale cantiere struttura grande Lodi"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="work-overlay">
+        <div class="work-label">Lavori in Quota</div>
+        <div class="work-title">Intervento Strutturale · Lodi</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PERCHÉ NOI -->
+<section id="perche-noi">
+  <div style="text-align:center;max-width:580px;margin:0 auto 3rem;">
+    <div class="section-label" style="justify-content:center;">Perché Sceglierci</div>
+    <h2>I motivi che ci<br/>rendono <span class="accent">diversi</span></h2>
+  </div>
+  <div class="perche-grid">
+    <div class="perche-item fade-up">
+      <div class="perche-num">01</div>
+      <div class="perche-content">
+        <h3>Esperienza Verificata</h3>
+        <p>Più di vent'anni sul campo significano soluzioni collaudate e nessuna sorpresa durante i lavori.</p>
+      </div>
+    </div>
+    <div class="perche-item fade-up">
+      <div class="perche-num">02</div>
+      <div class="perche-content">
+        <h3>Sicurezza Prima</h3>
+        <p>Tutti i ponteggi sono certificati e installati secondo le normative vigenti. La sicurezza non è negoziabile.</p>
+      </div>
+    </div>
+    <div class="perche-item fade-up">
+      <div class="perche-num">03</div>
+      <div class="perche-content">
+        <h3>Prezzi Competitivi</h3>
+        <p>Ottimo rapporto qualità-prezzo. Preventivo gratuito e trasparente, senza costi nascosti.</p>
+      </div>
+    </div>
+    <div class="perche-item fade-up">
+      <div class="perche-num">04</div>
+      <div class="perche-content">
+        <h3>Risposta Rapida</h3>
+        <p>Sopralluogo in tempi brevi e WhatsApp sempre attivo. Siamo raggiungibili quando hai bisogno.</p>
+      </div>
+    </div>
+    <div class="perche-item fade-up">
+      <div class="perche-num">05</div>
+      <div class="perche-content">
+        <h3>Copertura Provinciale</h3>
+        <p>Operiamo su tutta la provincia di Cremona e zone limitrofe.</p>
+      </div>
+    </div>
+    <div class="perche-item fade-up">
+      <div class="perche-num">06</div>
+      <div class="perche-content">
+        <h3>Chiavi in Mano</h3>
+        <p>Dal progetto alla consegna, gestiamo ogni aspetto del lavoro. Tu non devi preoccuparti di nulla.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREVENTIVO -->
+<section id="preventivo">
+  <div class="prev-wrap">
+    <div class="prev-text">
+      <div class="section-label">Contatti</div>
+      <h2>Preventivo<br/><span style="color:var(--gold)">Gratuito</span></h2>
+      <p class="lead">Compila il modulo oppure chiamaci. Sopralluogo gratuito e preventivo personalizzato in tempi rapidi. Disponibili anche su WhatsApp.</p>
+      <div class="contact-info">
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <a href="tel:3451183711">345 118 3711</a>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <a href="tel:037318515338">0373 1851538</a>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">💬</div>
+          <a href="https://wa.me/393451183711" target="_blank">WhatsApp: 345 118 3711</a>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📍</div>
+          <span>Via Lodi, 11 – 26010 Bagnolo Cremasco (CR)</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-card">
+      <h3>Richiedi Preventivo</h3>
+      <p>Risponderemo entro 24 ore lavorative</p>
+      <form onsubmit="handleForm(event)">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="nome">Nome e Cognome*</label>
+            <input type="text" id="nome" placeholder="Mario Rossi" required/>
+          </div>
+          <div class="form-group">
+            <label for="tel">Telefono*</label>
+            <input type="tel" id="tel" placeholder="345 000 0000" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="mario@esempio.it"/>
+        </div>
+        <div class="form-group">
+          <label for="servizio">Tipo di Servizio*</label>
+          <select id="servizio" required>
+            <option value="">— Seleziona —</option>
+            <option>Geometra / Consulenza</option>
+            <option>Lavori Edili</option>
+            <option>Noleggio Ponteggi</option>
+            <option>Altro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="msg">Descrizione del Lavoro</label>
+          <textarea id="msg" placeholder="Descrivi brevemente l'intervento e l'indirizzo del cantiere..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Invia Richiesta →</button>
+        <div class="form-note">🔒 Dati trattati nel rispetto del GDPR. Nessuno spam.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo">Uni<span>point</span></div>
+      <p>Noleggio Ponteggi, Costruzioni &amp; Ristrutturazioni. Il tuo partner di fiducia in provincia di Cremona da oltre 20 anni.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Servizi</h4>
+      <ul>
+        <li><a href="#servizi">Geometra</a></li>
+        <li><a href="#servizi">Lavori Edili</a></li>
+        <li><a href="#servizi">Noleggio Ponteggi</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Azienda</h4>
+      <ul>
+        <li><a href="#chi-siamo">Chi Siamo</a></li>
+        <li><a href="#cantieri">I Nostri Lavori</a></li>
+        <li><a href="#perche-noi">Perché Sceglierci</a></li>
+        <li><a href="#preventivo">Preventivo Gratuito</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contatti</h4>
+      <ul>
+        <li><a href="tel:3451183711">📞 345 118 3711</a></li>
+        <li><a href="tel:037318515338">📞 0373 1851538</a></li>
+        <li><a href="https://wa.me/393451183711">💬 WhatsApp</a></li>
+        <li><a href="https://maps.google.com/?q=Via+Lodi+11+Bagnolo+Cremasco" target="_blank">📍 Via Lodi, 11 – Bagnolo Cremasco</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Unipoint S.r.l. – Noleggio Ponteggi Costruzioni Ristrutturazioni</span>
+    <span><a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a></span>
+  </div>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/393451183711" class="wa-float" target="_blank">
+  <span>💬</span><span>WhatsApp</span>
+</a>
+
+<script>
+  function toggleMob() {
+    document.getElementById('mobMenu').classList.toggle('open');
+  }
+  function closeMob() {
+    document.getElementById('mobMenu').classList.remove('open');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Richiesta inviata! Vi contatteremo presto.';
+    btn.style.background = '#27a65c';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
